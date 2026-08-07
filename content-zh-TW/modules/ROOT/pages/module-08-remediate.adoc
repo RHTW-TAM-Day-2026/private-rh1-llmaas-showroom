@@ -5,9 +5,19 @@
 
 在前面的模組中，您已經體驗 AI 的各種應用，包括建置 RHEL MCP，並測試讀取遠端 RHEL 主機上的應用程式日誌。
 
-在本模組中，您將把前面建立的 AI 與 RHEL MCP 能力整合至 Ansible Automation Platform。整體事件驅動修復鏈為「事件產生 → Event Forwarder → EDA Rulebook → AI Analysis + RHEL MCP → Governed Workflow + 人工核准 → 驗證與恢復」。當一般使用者成功開啟不應存取的管理頁面時，事件會沿著這條流程自動傳遞：EDA 依 Rulebook 啟動 AI Analysis，AI 蒐集證據並提出受控的修復建議，最後由 AAP Workflow 在人工核准後完成網頁修復與驗證。
+在本模組中，您將把前面建立的 AI 與 RHEL MCP 能力整合至 Ansible Automation Platform。完成從事件發生、分析判斷到修復驗證的完整流程。
+
+本模組會從一個實際情境開始： `*一般使用者成功進入原本不應該存取的管理頁面*`。
+
+這代表應用程式可能存在 Broken Access Control 問題。事件發生後，系統需要先偵測異常、確認事件內容，再決定是否需要進一步處理；若需要修復，還必須經過核准、執行變更，最後確認服務是否恢復正常。
+
+整體事件驅動修復鏈為「事件產生 → Event Forwarder → EDA Rulebook → AI Analysis + RHEL MCP → Governed Workflow + 人工核准 → 驗證與恢復」。
 
 image::en@modules:ROOT:AAP_Architecture.png[受控的網頁修復流程架構,width=90%]
+
+在這條流程中，Event Forwarder 負責偵測並送出事件，Event-Driven Ansible（EDA） 透過 Rulebook 判斷事件並啟動 AI Analysis。AI 會透過 RHEL MCP 蒐集遠端主機上的相關證據，產生分析結果與修復建議。當建議符合允許的修復動作後，EDA 會啟動 AAP Governed Workflow，先切換維護頁面並發出通知，待人工核准後部署修復版本、驗證結果，最後恢復正常服務。
+
+接下來的實作，會一步一步完成並走過這條 End-to-End 修復流程。完成後，您可以從同一個安全事件中觀察事件偵測、AI 分析、治理控制與自動化修復如何串接在一起。
 
 [NOTE]
 ====
@@ -757,7 +767,11 @@ AI Analysis 將執行以下動作：
 . 產生結構化的事件判斷與修復建議。
 . 將受控的 Decision Event 傳回 Event Stream。
 
-在 Job 輸出中，於搜尋欄位輸入 `TASK - Show safe investigation summary`，點選輸出檢視細節，確認分析結果包含類似以下內容：
+在 Job 輸出中，於搜尋欄位選擇 `TASK` ，並在右側輸入 `Show safe investigation summary`，即可顯示該Task之輸出內容
+
+image::en@modules:ROOT:template_search.png[AI Analysis輸出結果搜尋,width=80%]
+
+點選檢視細節，確認分析結果包含類似以下內容：
 
 [source,yaml]
 ----

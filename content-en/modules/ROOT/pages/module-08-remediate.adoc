@@ -5,9 +5,19 @@
 
 In the previous modules, you explored various AI applications, including building RHEL MCP and testing access to application logs on a remote RHEL host.
 
-In this module, you will integrate the AI and RHEL MCP capabilities built earlier with Ansible Automation Platform. The overall event-driven remediation chain is "Event Generation → Event Forwarder → EDA Rulebook → AI Analysis + RHEL MCP → Governed Workflow + Manual Approval → Validation and Recovery." When a regular user successfully opens an administrative page that should not be accessible, the event automatically travels through this flow: EDA launches AI Analysis according to the Rulebook, AI gathers evidence and proposes a governed remediation recommendation, and finally the AAP Workflow completes website remediation and validation after manual approval.
+In this module, you will integrate the AI and RHEL MCP capabilities built earlier with Ansible Automation Platform to complete an end-to-end process from event occurrence and analysis through remediation and validation.
+
+This module begins with a practical scenario: `*a regular user successfully accesses an administrative page that should not be accessible*`.
+
+This indicates that the application may have a Broken Access Control issue. After the event occurs, the system first needs to detect the anomaly and confirm the event details before determining whether further action is required; if remediation is needed, the process must also go through approval, execute the change, and finally confirm that the service has returned to normal.
+
+The overall event-driven remediation chain is "Event Generation → Event Forwarder → EDA Rulebook → AI Analysis + RHEL MCP → Governed Workflow + Manual Approval → Validation and Recovery."
 
 image::en@modules:ROOT:AAP_Architecture.png[Governed web remediation flow architecture,width=90%]
+
+In this flow, Event Forwarder detects and sends events, while Event-Driven Ansible (EDA) evaluates them through the Rulebook and launches AI Analysis. AI uses RHEL MCP to gather relevant evidence from the remote host and produce analysis results and remediation recommendations. When the recommendation matches an allowed remediation action, EDA launches the AAP Governed Workflow, which first switches the website to the maintenance page and sends a notification, then deploys the repaired version after manual approval, validates the result, and finally restores normal service.
+
+The hands-on exercises that follow will walk through this End-to-End remediation flow step by step. When complete, you will be able to observe how event detection, AI analysis, governance controls, and automated remediation are connected around the same security event.
 
 [NOTE]
 ====
@@ -577,9 +587,8 @@ Add the following Job Template:
 CVE Radar - Deploy Repaired Website
 ----
 +
-This step must run only after manual approval succeeds. Select the three white dots next to the newly created link, and change the condition from the default *Run always* to *Run on success*.
+This step can run only after manual approval succeeds. Adjust the *Status* field and change the condition from the default *Always Run* to *Run on success*.
 +
-image::en@modules:ROOT:workflow_run.png[Set the Workflow connection condition to Run on success,width=55%]
 
 . Create the remediation result verification node
 +
@@ -758,7 +767,11 @@ AI Analysis performs the following actions:
 . Generate a structured event assessment and remediation recommendation.
 . Send the governed Decision Event back to the Event Stream.
 
-In the Job output, enter `TASK - Show safe investigation summary` in the search field, click the output to view the details, and verify that the analysis result includes content similar to the following:
+In the Job output, select `TASK` in the search field, and enter `Show safe investigation summary` on the right to display the output of that Task.
+
+image::en@modules:ROOT:template_search.png[AI Analysis output search,width=80%]
+
+Click to view the details and verify that the analysis result includes content similar to the following:
 
 [source,yaml]
 ----
