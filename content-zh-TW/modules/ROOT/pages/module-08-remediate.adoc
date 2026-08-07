@@ -577,7 +577,7 @@ ntfy_message: "已切換至維護頁，請至 AAP 核准後續修復流程。"
 CVE Radar - Deploy Repaired Website
 ----
 +
-此步驟只有在人工核准成功後才能執行，因此請調整*Status*欄位，將條件由預設的 *Always Run* 改為 *Run on success*。
+此步驟只有在人工核准成功後才能執行，因此請調整 *Status* 欄位，將條件由預設的 *Always Run* 改為 *Run on success*。
 +
 
 . 建立修復結果驗證節點
