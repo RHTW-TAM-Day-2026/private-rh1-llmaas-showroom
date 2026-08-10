@@ -71,6 +71,11 @@ image::enable-read-log-file-tool.png[Auto-approve the read_log_file tool,width=8
 ----
 +
 
+. After confirming that the settings are correct, click *Done* to return to the
+Cline chat panel.
++
+image::click-done-mcp-setting.png[Done button in Cline MCP settings,width=80%]
+
 If Cline was already running, reload the Dev Spaces window or restart the Cline
 session after saving the MCP configuration.
 

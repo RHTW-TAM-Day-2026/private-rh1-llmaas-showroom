@@ -68,6 +68,10 @@ image::en@modules:ROOT:enable-read-log-file-tool.png[自動核准 read_log_file 
 ----
 +
 
+. 確認設定正確後，點選 *Done* 回到 Cline 對話框。
++
+image::en@modules:ROOT:click-done-mcp-setting.png[Done button in Cline MCP settings,width=80%]
+
 若 Cline 已在運行，請在儲存 MCP 設定後重新載入 Dev Spaces 視窗或重新啟動 Cline 工作階段。
 
 == 分析三個應用程式日誌
