@@ -235,7 +235,7 @@ spec:
     spec:
       initContainers:
         - name: prepare-ssh-key
-          image: registry.access.redhat.com/ubi9/ubi-minimal:latest
+          image: registry.redhat.io/ubi9-minimal:9.8-1786323074
           command: ["/bin/sh", "-c"]
           args:
             - >-
@@ -250,7 +250,7 @@ spec:
               mountPath: /work
       containers:
         - name: rhel-mcp
-          image: quay.io/redhat-services-prod/rhel-lightspeed-tenant/linux-mcp-server:latest
+          image: quay.io/redhat-services-prod/rhel-lightspeed-tenant/linux-mcp-server:0.1.dev42
           imagePullPolicy: Always
           env:
             - name: LINUX_MCP_USER
