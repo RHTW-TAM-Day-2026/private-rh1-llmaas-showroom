@@ -13,6 +13,10 @@ cluster-internal RHEL MCP Service URL.
 +
 image::cline-select-mcp.png[Cline MCP button,width=80%]
 
+. Select *Remote Servers*.
++
+image::select-remote-server.png[Cline MCP remote server,width=60%]
+
 . Enter these values:
 +
 [cols="1,2"]
@@ -30,6 +34,10 @@ image::cline-select-mcp.png[Cline MCP button,width=80%]
 |===
 +
 image::cline-mcp-server-settings.png[Cline MCP Server settings,width=80%]
+
+. Click *Add Server*.
++
+image::click-add-server.png[Cline Add MCP Server,width=80%]
 
 . Select *Configure*.
 +

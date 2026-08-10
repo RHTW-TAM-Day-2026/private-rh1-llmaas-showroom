@@ -11,6 +11,10 @@
 +
 image::en@modules:ROOT:cline-select-mcp.png[Cline MCP button,width=80%]
 
+. 選擇 *Remote Servers*。
++
+image::en@modules:ROOT:select-remote-server.png[Cline MCP Remote Servers 分頁,width=60%]
+
 . 輸入以下值：
 +
 [cols="1,2"]
@@ -28,6 +32,10 @@ image::en@modules:ROOT:cline-select-mcp.png[Cline MCP button,width=80%]
 |===
 +
 image::en@modules:ROOT:cline-mcp-server-settings.png[Cline MCP Server settings,width=80%]
+
+. 點選 *Add Server*。
++
+image::en@modules:ROOT:click-add-server.png[Cline Add Server 按鈕,width=80%]
 
 . 選擇 *Configure*。
 +
