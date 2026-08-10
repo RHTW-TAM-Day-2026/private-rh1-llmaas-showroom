@@ -35,19 +35,19 @@ image::en@modules:ROOT:genaistudio-changeproject.png[]
 
 在 `Models` 標籤下，您不會看到任何可用模型。為什麼？因為這個專案（專案 = 命名空間）中沒有部署任何模型。
 
-但是，我們在叢集管理員管理的另一個命名空間中部署了一個模型。這位管理員已為我們的組織建立了「模型即服務」架構，部署並管理一個中央模型，供組織內各個遠端團隊使用。
+但是，我們在叢集管理員管理的另一個命名空間中部署了模型。這位管理員已為我們的組織建立了「模型即服務」架構，集中部署並管理可供組織內各個遠端團隊使用的模型。
 
-我們沒有足夠的使用者權限來管理模型部署，但可以透過 `Models as a service` 標籤存取其端點資訊。
+我們沒有足夠的使用者權限來管理這些模型部署，但可以透過 `Models as a service` 標籤存取其端點資訊。
 
 image::en@modules:ROOT:maas-tab.png[]
 
-選擇該標籤。您會看到管理員已為您部署了一個可使用的模型：`qwen3-4b-instruct`
+選擇 `Models as a service` 標籤。您會看到管理員已為您部署了兩個可使用的模型：`qwen3-4b-instruct` 和 `qwen3-30b-a3b-instruct-2507-fp8`。
 
 image::en@modules:ROOT:maas-model.png[]
 
 // Test model in playground
 
-下一節需要用到端點資訊。在 `External endpoint` 欄位下選擇 `View`：
+下一節需要使用 `qwen3-4b-instruct` 的端點。在 `qwen3-4b-instruct` 那一列的 `External endpoint` 欄位下選擇 `View`：
 
 image::en@modules:ROOT:view-endpoint.png[]
 

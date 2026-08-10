@@ -36,19 +36,19 @@ Now you may view your available asset endpoints.
 
 You will not see any available models under the `Models` tab. Why? Because you do not have a model deployed in this project (project = namespace).
 
-We do, however, have a model deployed in a separate namespace managed by our cluster admin. This admin has set up a `Models as a Service` architecture for our organization with a central model they have deployed and now manage that is available for use by remote teams across the organization. 
+We do, however, have models deployed in a separate namespace managed by our cluster admin. This admin has set up a `Models as a Service` architecture for our organization with centrally deployed models that are available for use by remote teams across the organization.
 
-We will not be able to manage the model deployment with our simple user privileges, but we can access its endpoint information via the `Models as a service` tab. 
+We will not be able to manage the model deployments with our simple user privileges, but we can access their endpoint information via the `Models as a service` tab.
 
 image::maas-tab.png[]
 
-Select the tab. You will see your admin has deployed one model for you to use: `qwen3-4b-instruct`
+Select the `Models as a service` tab. You will see that your admin has deployed two models for you to use: `qwen3-4b-instruct` and `qwen3-30b-a3b-instruct-2507-fp8`.
 
 image::maas-model.png[]
 
 // Test model in playground
 
-We need the endpoint for the next section. Select `View` under the `External endpoint` column:
+For the next section, you need the endpoint for `qwen3-4b-instruct`. In the `qwen3-4b-instruct` row, select `View` under the `External endpoint` column:
 
 image::view-endpoint.png[]
 
