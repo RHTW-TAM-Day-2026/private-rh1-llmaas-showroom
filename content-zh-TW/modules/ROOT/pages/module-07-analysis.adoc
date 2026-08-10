@@ -41,6 +41,14 @@ image::en@modules:ROOT:click-add-server.png[Cline Add Server 按鈕,width=80%]
 +
 image::en@modules:ROOT:cline-mcp-configure-button.png[Cline MCP Configure button,width=80%]
 
+. 選擇 *Configure MCP Servers*。`cline_mcp_settings.json` 檔案會在右側的編輯器中開啟。
++
+image::en@modules:ROOT:select-configure-mcp-servers.png[Cline MCP 設定 JSON 檔案,width=80%]
+
+. 展開 *rhel-mcp*，然後勾選 `read_log_file` 工具的 *Auto-approve*。
++
+image::en@modules:ROOT:enable-read-log-file-tool.png[自動核准 read_log_file 工具,width=80%]
+
 . 確認生成的設定：
 +
 [source,json,role=execute,subs=attributes+]

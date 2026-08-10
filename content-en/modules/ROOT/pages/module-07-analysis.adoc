@@ -43,6 +43,15 @@ image::click-add-server.png[Cline Add MCP Server,width=80%]
 +
 image::cline-mcp-configure-button.png[Cline MCP Configure button,width=80%]
 
+. Select *Configure MCP Servers*. The `cline_mcp_settings.json` file opens in
+the editor on the right.
++
+image::select-configure-mcp-servers.png[Cline MCP settings JSON file,width=80%]
+
+. Expand *rhel-mcp*, then select *Auto-approve* for the `read_log_file` tool.
++
+image::enable-read-log-file-tool.png[Auto-approve the read_log_file tool,width=80%]
+
 . Confirm the generated configuration:
 +
 [source,json,role=execute,subs=attributes+]
