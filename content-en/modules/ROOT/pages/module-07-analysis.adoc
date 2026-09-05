@@ -84,6 +84,8 @@ session after saving the MCP configuration.
 Use the exact MCP tool name and argument names. `read_log_file` requires
 `log_path`, not `path`.
 
+Examine the three application logs using the exact MCP tool name and arguments. Note that `read_log_file` requires the `log_path parameter`, not `path`.
+
 Paste this prompt into Cline:
 
 [source,text,role=execute,subs=attributes+]
@@ -145,34 +147,27 @@ image::cline-rhel-mcp-allowlist-failure.png[Cline RHEL MCP allowlist failure,wid
 
 == Troubleshooting
 
-=== Cline Uses `path` Instead of `log_path`
+We found that Cline uses *Local File Reading* and *path Instead of log_path* so let us modify the above prompt with the correct tool and arguments. We configure Cline to read local files by explicitly targeting the rhel-mcp__read_log_file tool (using its configured MCP server key rather than the RHOAI display name RHEL-MCP-Server).
 
-The correct tool and arguments are:
-
-[source,json,role=execute,subs=attributes+]
+[source,text,role=execute,subs=attributes+]
 ----
+Call exactly this MCP tool and arguments:
+
+Tool: rhel-mcp__read_log_file
+Arguments:
 {
   "host": "{edge_host}",
   "log_path": "/var/log/kernel-cve-radar/error.log",
   "lines": 200
 }
+
+Do not use another tool or path.
 ----
 
-=== Cline Uses Local File Reading
-
-Name the tool explicitly:
-
-[listing,role=execute]
-....
-rhel-mcp__read_log_file
-....
-
-Do not refer only to the RHOAI display name `RHEL-MCP-Server`; Cline uses the
-server key configured in its MCP settings.
 
 === The MCP Connection Works but SSH Closes
 
-From the Showroom terminal, restart your personal MCP deployment:
+Wehn MCP Connection wroks but SSH closed, restart your personal MCP deployment from the Showroom terminal:
 
 [source,console,role=execute,subs=attributes+]
 ----
