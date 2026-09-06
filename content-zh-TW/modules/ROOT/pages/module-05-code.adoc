@@ -192,7 +192,7 @@ NOTE: 若儲存提供者設定後，Cline 顯示 **Introducing Cline Kanban** �
 
 image::en@modules:ROOT:cline-kanban-do-not-install.png[]
 
-NOTE: 提供者設定文件參考：https://docs.cline.bot/provider-config/openai-compatible[Cline OpenAI-Compatible Provider Documentation]
+NOTE: 提供者設定文件參考： https://docs.cline.bot/provider-config/openai-compatible[Cline OpenAI-Compatible Provider Documentation]
 
 模型正確設定後，返回 Cline 聊天面板，確認 `qwen3-4b-instruct` 為已選取的模型。
 

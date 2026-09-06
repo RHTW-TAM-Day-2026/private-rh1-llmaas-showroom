@@ -167,7 +167,7 @@ Do not use another tool or path.
 
 === The MCP Connection Works but SSH Closes
 
-Wehn MCP Connection wroks but SSH closed, restart your personal MCP deployment from the Showroom terminal:
+When MCP Connection works but SSH closed, restart your personal MCP deployment from the Showroom terminal:
 
 [source,console,role=execute,subs=attributes+]
 ----

@@ -124,8 +124,8 @@ The architecture diagram above shows how this automated remediation flow proceed
 
 
 *Phase 1｜Environment and Resource Verification*
-
 == 1. Log in to the Kernel CVE Radar website
+
 
 Open your Kernel CVE Radar website:
 
@@ -150,8 +150,8 @@ image::en@modules:ROOT:cve-radar-home.png[Kernel CVE Radar login page,width=80%]
 
 
 *Phase 1｜Environment and Resource Verification*
-
 == 2. Log in to Ansible Automation Platform
+
 
 Open your Ansible Automation Platform:
 
@@ -182,8 +182,8 @@ Each learner has an independent Organization and automation resources. You will 
 
 
 *Phase 1｜Environment and Resource Verification*
-
 == 3. Verify pre-created automation resources
+
 
 === Verify Automation Execution Templates
 
@@ -227,8 +227,8 @@ All Templates are already associated with the predefined Project, Inventory, Cre
 
 
 *Phase 2｜Event Monitoring and EDA Preparation*
-
 == 4. Role and Deployment of Event Forwarder
+
 
 Before deploying Event Forwarder, take a quick look at the event-driven automation flow used in this lab.
 
@@ -269,8 +269,8 @@ This Template uses Ansible to perform the following configuration on the target 
 
 
 *Phase 2｜Event Monitoring and EDA Preparation*
-
 == 5. Verify Event Stream
+
 
 From the left navigation menu, select:
 
@@ -304,8 +304,8 @@ image::en@modules:ROOT:event_stream_count.png[Verify that the Events received co
 
 
 *Phase 2｜Event Monitoring and EDA Preparation*
-
 == 6. Verify Rulebook Activation
+
 
 From the left navigation menu, select:
 
@@ -336,7 +336,6 @@ image::en@modules:ROOT:rulebook_running.png[Rulebook Activation Running status,w
 
 
 *Phase 3｜AI Analysis Preparation*
-
 == 7. Create AI Model Credential（Hands-on Configuration 1）
 
 
@@ -424,7 +423,6 @@ Click Create credential and create the Credential using the following fields:
 Click Create credential to finish creating it. If needed, you can create a separate Credential for each of the two Models provided in this TAM Day Lab; later, select the corresponding Credential in the AI Analysis Template.
 
 *Phase 3｜AI Analysis Preparation*
-
 == 8. Configure the Model and RHEL MCP Endpoint for AI Analysis（Hands-on Configuration 2）
 
 
@@ -460,8 +458,8 @@ Keep the other existing variables in the Template, [red yellow-background]#do no
 
 
 *Phase 4｜Governed Remediation Preparation*
-
 == 9. Configure alert notifications（Hands-on Configuration 3）
+
 
 From the left navigation menu, select:
 
@@ -500,8 +498,8 @@ image::en@modules:ROOT:ntfy_test.png[ntfy alert and remediation-complete notific
 
 
 *Phase 4｜Governed Remediation Preparation*
-
 == 10. Build the website remediation and alert workflow（Hands-on Configuration 4）
+
 
 From the left navigation menu, select:
 
@@ -671,8 +669,8 @@ Verify that the Workflow meets the following conditions:
 After confirming that the nodes, link directions, and execution conditions match the workflow diagram, select *Save*.
 
 *Phase 4｜Governed Remediation Preparation*
-
 == 11. Enable Event Stream event forwarding
+
 
 Next, return to *Automation Decisions → Event Streams*
 
@@ -684,8 +682,8 @@ The preparation is now complete. You can proceed with the test.
 
 
 *Phase 5｜Event Analysis and Approval*
-
 == 12. Generate a security event through the website
+
 
 You will now use the Kernel CVE Radar website as a regular user.
 
@@ -718,9 +716,9 @@ Do not click it repeatedly within a short period to avoid generating multiple id
 
 image::en@modules:ROOT:cve-radar-admin.png[Regular user successfully opens the administrative page,width=80%]
 
+*Phase 5｜Event Analysis and Approval*
 == 13. Observe EDA receiving the event
 
-*Phase: Phase 5｜Event Analysis and Approval*
 
 Return to Ansible Automation Platform.
 
@@ -758,8 +756,8 @@ EDA does not directly remediate the website. Instead, it passes the event to AI 
 
 
 *Phase 5｜Event Analysis and Approval*
-
 == 14. Review AI Analysis
+
 
 From the left navigation menu, select:
 
@@ -827,8 +825,8 @@ image::en@modules:ROOT:ntfy_warning.png[ntfy unauthorized access alert,width=80%
 
 
 *Phase 5｜Event Analysis and Approval*
-
 == 15. Approve the remediation Workflow
+
 
 From the left navigation menu, select:
 
@@ -856,8 +854,8 @@ AI can analyze, plan, and propose remediation recommendations, but before change
 
 
 *Phase 6｜Remediation and Validation*
-
 == 16. Observe the Workflow executing remediation
+
 
 After approval, the Workflow executes the governed remediation procedures in sequence:
 
@@ -882,8 +880,8 @@ image::en@modules:ROOT:ntfy_final.png[ntfy remediation-complete notification,wid
 
 
 *Phase 6｜Remediation and Validation*
-
 == 17. Validate the remediation result
+
 
 Return to the Kernel CVE Radar website:
 
