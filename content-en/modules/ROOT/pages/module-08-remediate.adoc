@@ -3,23 +3,6 @@
 [#event-driven-ai-remediation]
 = Implementing Event-Driven Governed Remediation with Agentic AI
 
-
-== Lab Objectives
-
-* Log in to your personal Ansible Automation Platform environment.
-* Verify the automation resources pre-created in AAP.
-* Deploy the event forwarding service from AAP.
-* Create an AI Model Credential.
-* Configure the RHEL MCP Endpoint and AI Model Endpoint used by AI Analysis.
-* Build the governed website remediation Workflow.
-* Generate a Broken Access Control event through website interaction.
-* Observe EDA launching AI Analysis.
-* Review the evidence gathered by AI and the remediation decision.
-* Approve and execute the governed website remediation Workflow.
-* Verify that a regular user can no longer access the administrative page.
-
-
-
 In the previous modules, you explored various AI applications, including building RHEL MCP and testing access to application logs on a remote RHEL host.
 
 In this module, you will integrate the AI and RHEL MCP capabilities built earlier with Ansible Automation Platform to complete an end-to-end process from event occurrence and analysis through remediation and validation.
@@ -40,6 +23,22 @@ The hands-on exercises that follow will walk through this End-to-End remediation
 ====
 The Organization, Inventory, Credential, Project, Job Template, Workflow Job Template, Event Stream, and Rulebook Activation required for this lab have already been created before class. A small number of settings still need to be completed by the learner; follow the steps in this module to configure them one by one.
 ====
+
+
+== Lab Objectives
+
+* Log in to your personal Ansible Automation Platform environment.
+* Verify the automation resources pre-created in AAP.
+* Deploy the event forwarding service from AAP.
+* Create an AI Model Credential.
+* Configure the RHEL MCP Endpoint and AI Model Endpoint used by AI Analysis.
+* Build the governed website remediation Workflow.
+* Generate a Broken Access Control event through website interaction.
+* Observe EDA launching AI Analysis.
+* Review the evidence gathered by AI and the remediation decision.
+* Approve and execute the governed website remediation Workflow.
+* Verify that a regular user can no longer access the administrative page.
+
 
 == Workshop Hands-on Flow
 
@@ -123,9 +122,9 @@ The architecture diagram above shows how this automated remediation flow proceed
 |===
 
 
-*Phase 1｜Environment and Resource Verification*
 == 1. Log in to the Kernel CVE Radar website
 
+*Phase 1｜Environment and Resource Verification*
 
 Open your Kernel CVE Radar website:
 
@@ -149,9 +148,9 @@ Log in with the following account:
 image::en@modules:ROOT:cve-radar-home.png[Kernel CVE Radar login page,width=80%]
 
 
-*Phase 1｜Environment and Resource Verification*
 == 2. Log in to Ansible Automation Platform
 
+*Phase 1｜Environment and Resource Verification*
 
 Open your Ansible Automation Platform:
 
@@ -181,9 +180,9 @@ image::en@modules:ROOT:aap_user.png[AAP personal username,width=80%]
 Each learner has an independent Organization and automation resources. You will only work with the Inventory, Job Template, Workflow, Event Stream, and Rulebook Activation in your own Organization.
 
 
-*Phase 1｜Environment and Resource Verification*
 == 3. Verify pre-created automation resources
 
+*Phase 1｜Environment and Resource Verification*
 
 === Verify Automation Execution Templates
 
@@ -226,9 +225,9 @@ All Templates are already associated with the predefined Project, Inventory, Cre
 ====
 
 
-*Phase 2｜Event Monitoring and EDA Preparation*
 == 4. Role and Deployment of Event Forwarder
 
+*Phase 2｜Event Monitoring and EDA Preparation*
 
 Before deploying Event Forwarder, take a quick look at the event-driven automation flow used in this lab.
 
@@ -268,9 +267,9 @@ This Template uses Ansible to perform the following configuration on the target 
 * Route matching events to the AAP Event Stream and verify that the job completes successfully. After deployment, the Event Forwarder continues to run in the background.
 
 
-*Phase 2｜Event Monitoring and EDA Preparation*
 == 5. Verify Event Stream
 
+*Phase 2｜Event Monitoring and EDA Preparation*
 
 From the left navigation menu, select:
 
@@ -303,9 +302,9 @@ Return to the Event Stream page in AAP and verify that the Events received count
 image::en@modules:ROOT:event_stream_count.png[Verify that the Events received count has increased,width=80%]
 
 
-*Phase 2｜Event Monitoring and EDA Preparation*
 == 6. Verify Rulebook Activation
 
+*Phase 2｜Event Monitoring and EDA Preparation*
 
 From the left navigation menu, select:
 
@@ -335,9 +334,9 @@ The Activation will then receive events from the Event Stream and use the Rulebo
 image::en@modules:ROOT:rulebook_running.png[Rulebook Activation Running status,width=80%]
 
 
-*Phase 3｜AI Analysis Preparation*
 == 7. Create AI Model Credential（Hands-on Configuration 1）
 
+*Phase 3｜AI Analysis Preparation*
 
 The CVE Radar - AI Risk Analysis Template needs to communicate with the AI Model, so you must create a Credential for the connection. Prepare the AI Model URL and Token obtained in Module 05; either of the two Models provided for this TAM Day Lab can be used.
 
@@ -422,9 +421,10 @@ Click Create credential and create the Credential using the following fields:
 
 Click Create credential to finish creating it. If needed, you can create a separate Credential for each of the two Models provided in this TAM Day Lab; later, select the corresponding Credential in the AI Analysis Template.
 
-*Phase 3｜AI Analysis Preparation*
+
 == 8. Configure the Model and RHEL MCP Endpoint for AI Analysis（Hands-on Configuration 2）
 
+*Phase 3｜AI Analysis Preparation*
 
 From the left navigation menu, select:
 
@@ -457,9 +457,9 @@ image::en@modules:ROOT:AI_template.png[Configure the AI Risk Analysis Template,w
 Keep the other existing variables in the Template, [red yellow-background]#do not remove the Timeout or TLS validation settings#, and then select Save template.
 
 
-*Phase 4｜Governed Remediation Preparation*
 == 9. Configure alert notifications（Hands-on Configuration 3）
 
+*Phase 4｜Governed Remediation Preparation*
 
 From the left navigation menu, select:
 
@@ -497,9 +497,9 @@ After running the Template, return to ntfy_url and verify that the message appea
 image::en@modules:ROOT:ntfy_test.png[ntfy alert and remediation-complete notifications,width=80%]
 
 
-*Phase 4｜Governed Remediation Preparation*
 == 10. Build the website remediation and alert workflow（Hands-on Configuration 4）
 
+*Phase 4｜Governed Remediation Preparation*
 
 From the left navigation menu, select:
 
@@ -668,9 +668,9 @@ Verify that the Workflow meets the following conditions:
 
 After confirming that the nodes, link directions, and execution conditions match the workflow diagram, select *Save*.
 
-*Phase 4｜Governed Remediation Preparation*
 == 11. Enable Event Stream event forwarding
 
+*Phase 4｜Governed Remediation Preparation*
 
 Next, return to *Automation Decisions → Event Streams*
 
@@ -681,9 +681,9 @@ image::en@modules:ROOT:event_stream_enable.png[Enable Forward events to rulebook
 The preparation is now complete. You can proceed with the test.
 
 
-*Phase 5｜Event Analysis and Approval*
 == 12. Generate a security event through the website
 
+*Phase 5｜Event Analysis and Approval*
 
 You will now use the Kernel CVE Radar website as a regular user.
 
@@ -716,9 +716,10 @@ Do not click it repeatedly within a short period to avoid generating multiple id
 
 image::en@modules:ROOT:cve-radar-admin.png[Regular user successfully opens the administrative page,width=80%]
 
-*Phase 5｜Event Analysis and Approval*
+
 == 13. Observe EDA receiving the event
 
+*Phase 5｜Event Analysis and Approval*
 
 Return to Ansible Automation Platform.
 
@@ -755,9 +756,9 @@ The event data includes:
 EDA does not directly remediate the website. Instead, it passes the event to AI Analysis according to the defined rules.
 
 
-*Phase 5｜Event Analysis and Approval*
 == 14. Review AI Analysis
 
+*Phase 5｜Event Analysis and Approval*
 
 From the left navigation menu, select:
 
@@ -824,9 +825,9 @@ Switch to the ntfy notification center. You should see the alert notification co
 image::en@modules:ROOT:ntfy_warning.png[ntfy unauthorized access alert,width=80%]
 
 
-*Phase 5｜Event Analysis and Approval*
 == 15. Approve the remediation Workflow
 
+*Phase 5｜Event Analysis and Approval*
 
 From the left navigation menu, select:
 
@@ -853,9 +854,9 @@ AI can analyze, plan, and propose remediation recommendations, but before change
 ====
 
 
-*Phase 6｜Remediation and Validation*
 == 16. Observe the Workflow executing remediation
 
+*Phase 6｜Remediation and Validation*
 
 After approval, the Workflow executes the governed remediation procedures in sequence:
 
@@ -879,9 +880,9 @@ After the Workflow completes, the ntfy notification center also receives the rem
 image::en@modules:ROOT:ntfy_final.png[ntfy remediation-complete notification,width=80%]
 
 
-*Phase 6｜Remediation and Validation*
 == 17. Validate the remediation result
 
+*Phase 6｜Remediation and Validation*
 
 Return to the Kernel CVE Radar website:
 

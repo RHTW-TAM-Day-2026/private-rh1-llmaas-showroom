@@ -3,20 +3,6 @@
 [#event-driven-ai-remediation]
 = 以 Agentic AI 實現事件驅動的受控修復
 
-== 實驗目標
-
-* 登入個人的 Ansible Automation Platform 環境。
-* 確認 AAP 上預先建立的自動化資源。
-* 從 AAP 部署事件轉送服務。
-* 建立 AI Model Credential。
-* 設定 AI Analysis 使用的 RHEL MCP Endpoint 與 AI Model Endpoint。
-* 建立受控的網站修復 Workflow。
-* 透過網頁操作產生 Broken Access Control 事件。
-* 觀察 EDA 啟動 AI Analysis。
-* 檢視 AI 蒐集的證據與修復決策。
-* 核准並執行受控的網頁修復 Workflow。
-* 驗證一般使用者已無法存取管理頁面。
-
 
 在前面的模組中，您已經體驗 AI 的各種應用，包括建置 RHEL MCP，並測試讀取遠端 RHEL 主機上的應用程式日誌。
 
@@ -38,6 +24,22 @@ image::en@modules:ROOT:AAP_Architecture.png[受控的網頁修復流程架構,wi
 ====
 本實驗所需的 Organization、Inventory、Credential、Project、Job Template、Workflow Job Template、Event Stream 與 Rulebook Activation，均已於課前建立。仍有少數設定需要由學員完成，請依照本模組的步驟逐項操作。
 ====
+
+
+== 實驗目標
+
+* 登入個人的 Ansible Automation Platform 環境。
+* 確認 AAP 上預先建立的自動化資源。
+* 從 AAP 部署事件轉送服務。
+* 建立 AI Model Credential。
+* 設定 AI Analysis 使用的 RHEL MCP Endpoint 與 AI Model Endpoint。
+* 建立受控的網站修復 Workflow。
+* 透過網頁操作產生 Broken Access Control 事件。
+* 觀察 EDA 啟動 AI Analysis。
+* 檢視 AI 蒐集的證據與修復決策。
+* 核准並執行受控的網頁修復 Workflow。
+* 驗證一般使用者已無法存取管理頁面。
+
 
 == Workshop 實作流程
 
@@ -121,8 +123,9 @@ image::en@modules:ROOT:AAP_Architecture.png[受控的網頁修復流程架構,wi
 |===
 
 
-*階段 1｜環境與資源確認*
 == 1. 登入 Kernel CVE Radar 網站
+
+*階段 1｜環境與資源確認*
 
 
 開啟您的 Kernel CVE Radar 網站：
@@ -147,8 +150,9 @@ https://{edge_host}
 image::en@modules:ROOT:cve-radar-home.png[Kernel CVE Radar 登入頁面,width=80%]
 
 
-*階段 1｜環境與資源確認*
 == 2. 登入 Ansible Automation Platform
+
+*階段 1｜環境與資源確認*
 
 
 開啟您的 Ansible Automation Platform：
@@ -179,9 +183,9 @@ image::en@modules:ROOT:aap_user.png[AAP 個人使用者名稱,width=80%]
 每位學員都有獨立的 Organization 與自動化資源。您只會操作自己 Organization 中的 Inventory、Job Template、Workflow、Event Stream 與 Rulebook Activation。
 
 
-*階段 1｜環境與資源確認*
 == 3. 確認預先建立的自動化資源
 
+*階段 1｜環境與資源確認*
 
 === 確認 Automation Execution Templates
 
@@ -224,9 +228,9 @@ image::en@modules:ROOT:aap_user.png[AAP 個人使用者名稱,width=80%]
 ====
 
 
-*階段 2｜事件監控與 EDA 準備*
 == 4. Event Forwarder 的作用與部署
 
+*階段 2｜事件監控與 EDA 準備*
 
 在開始部署 Event Forwarder 前，先快速了解本實驗中的事件驅動自動化流程。
 
@@ -267,9 +271,9 @@ image::en@modules:ROOT:forwarder_run.png[執行 CVE Radar - Deploy Event Forward
 等待 Job 執行完成，並確認狀態顯示為 Successful。部署完成後，Event Forwarder 會以背景服務持續執行。
 
 
-*階段 2｜事件監控與 EDA 準備*
 == 5. 確認 Event Stream
 
+*階段 2｜事件監控與 EDA 準備*
 
 從左側導覽列選擇：
 
@@ -302,9 +306,9 @@ image::en@modules:ROOT:cve-radar-header.png[確認 Kernel CVE Radar 登入身分
 image::en@modules:ROOT:event_stream_count.png[確認 Events received 次數增加,width=80%]
 
 
-*階段 2｜事件監控與 EDA 準備*
 == 6. 確認 Rulebook Activation
 
+*階段 2｜事件監控與 EDA 準備*
 
 從左側導覽列選擇：
 
@@ -334,9 +338,9 @@ Activation 便會接收 Event Stream 傳入的事件，並根據 Rulebook 決定
 image::en@modules:ROOT:rulebook_running.png[Rulebook Activation Running 狀態,width=80%]
 
 
-*階段 3｜AI 分析準備*
 == 7. 建立 AI Model Credential（實作設定 1）
 
+*階段 3｜AI 分析準備*
 
 CVE Radar - AI Risk Analysis Template 需要與 AI Model 溝通，因此必須建立連線使用的 Credential。請準備在 Module 05 取得的 AI Model URL 與 Token；本次 TAM Day Lab 提供的兩個 Model 均可使用。
 
@@ -422,9 +426,9 @@ image::en@modules:ROOT:model_verify.png[AI Model 回應 MODEL_OK,width=80%]
 點選 Create credential 完成建立。您可以依需求，為本次 TAM Day Lab 提供的兩個 Model 分別建立 Credential；後續請在 AI Analysis Template 中選擇對應的 Credential 設定。
 
 
-*階段 3｜AI 分析準備*
 == 8. 設定 AI Analysis 的 Model 與 RHEL MCP Endpoint（實作設定 2）
 
+*階段 3｜AI 分析準備*
 
 從左側導覽列選擇：
 
@@ -456,10 +460,9 @@ image::en@modules:ROOT:AI_template.png[設定 AI Risk Analysis Template,width=80
 
 保留 Template 中既有的其他變數，[red yellow-background]#不要移除 Timeout 或 TLS 驗證等設定#，然後選擇 Save template。
 
-
-*階段 4｜受控修復準備*
 == 9. 設定告警通知（實作設定 3）
 
+*階段 4｜受控修復準備*
 
 從左側導覽列選擇：
 
@@ -497,8 +500,9 @@ ntfy_message: "這是測試訊息內容"
 image::en@modules:ROOT:ntfy_test.png[ntfy 告警與修復完成通知,width=80%]
 
 
-*階段 4｜受控修復準備*
 == 10. 建立網頁修復與告警流程（實作設定 4）
+
+*階段 4｜受控修復準備*
 
 
 從左側導覽列選擇：
@@ -669,8 +673,9 @@ image::en@modules:ROOT:remediation_workflow.png[CVE Radar 修復、核准與通�
 確認節點、連線方向與執行條件皆與流程圖一致後，選擇 *Save*。
 
 
-*階段 4｜受控修復準備*
 == 11. 開啟 Event Stream 事件轉送功能
+
+*階段 4｜受控修復準備*
 
 
 接著回到 *Automation Decisions → Event Streams*
@@ -682,9 +687,9 @@ image::en@modules:ROOT:event_stream_enable.png[啟用 Forward events to rulebook
 至此，準備工作已完成，接下來即可開始測試。
 
 
-*階段 5｜事件分析與核准*
 == 12. 透過網頁產生安全事件
 
+*階段 5｜事件分析與核准*
 
 現在您將以一般使用者身分操作 Kernel CVE Radar 網站。
 
@@ -718,9 +723,9 @@ https://{edge_host}
 image::en@modules:ROOT:cve-radar-admin.png[一般使用者成功開啟管理頁面,width=80%]
 
 
-*階段 5｜事件分析與核准*
 == 13. 觀察 EDA 接收事件
 
+*階段 5｜事件分析與核准*
 
 返回 Ansible Automation Platform。
 
@@ -757,9 +762,9 @@ Detect non-admin access to admin content
 EDA 本身不直接修復網站，而是根據已定義的規則，將事件交給 AI Analysis。
 
 
-*階段 5｜事件分析與核准*
 == 14. 檢視 AI Analysis
 
+*階段 5｜事件分析與核准*
 
 從左側導覽列選擇：
 
@@ -826,9 +831,9 @@ CVE Radar - Governed Web Remediation
 image::en@modules:ROOT:ntfy_warning.png[ntfy 權限異常使用通知,width=80%]
 
 
-*階段 5｜事件分析與核准*
 == 15. 核准修復 Workflow
 
+*階段 5｜事件分析與核准*
 
 從左側導覽列選擇：
 
@@ -854,8 +859,10 @@ image::en@modules:ROOT:workflow_approval.png[Workflow Approval,width=80%]
 AI 可以分析、規劃並提出修復建議，但在實際變更正式服務前，仍需由具備權限的人員核准。
 ====
 
-*階段 6｜修復與驗證*
+
 == 16. 觀察 Workflow 執行修復
+
+*階段 6｜修復與驗證*
 
 核准後，Workflow 將依序執行受控的修復程序：
 
@@ -878,9 +885,10 @@ Workflow 完成後，ntfy 訊息中心也會收到修復完成通知。
 
 image::en@modules:ROOT:ntfy_final.png[ntfy 修復完成通知,width=80%]
 
-*階段 6｜修復與驗證*
+
 == 17. 驗證修復結果
 
+*階段 6｜修復與驗證*
 
 返回 Kernel CVE Radar 網站：
 
