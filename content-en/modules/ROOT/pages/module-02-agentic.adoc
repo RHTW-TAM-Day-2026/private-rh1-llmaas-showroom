@@ -2,18 +2,18 @@
 :page-aliases: main@modules:ROOT:module-02-agentic.adoc
 
 [#agentic-ai]
-= System Administration with Agentic AI 
+= System Administration with Agentic AI  
 
-Now, you'll become a **site reliability engineer (SRE) or DevOps practitioner** focused on observability, diagnostics, and operational scale. 
+Next, you’ll step into the role of a **Site Reliability Engineer (SRE) or DevOps practitioner**, focusing on observability, diagnostics, and operational scale.
 
-But you won't go at it alone, you'll work with agentic AI tooling to navigate your OpenShift environment in real time - just like a modern SRE team building insight-driven automation.
+You won't be tackling this alone—you’ll collaborate with agentic AI tools to navigate your OpenShift environment in real time, mirroring how modern SRE teams build insight-driven automation.
 
 
-== Introduction to your environment
+== Getting Familiar with Your Environment
 
-Our first step is to get accustomed to our environment and its components. 
+To kick things off, let's get acquainted with our environment and its key components.
 
-Our home base will be our OpenShift cluster web console:
+Your central hub will be the OpenShift cluster web console:
 
 // NOTE: If you are accessing these instructions through our Red Hat Demo Platform workshop, the information below will render properly with unique values. If you are accessing the instructions separately for your own cluster, from the GitHub repository, you will instead see placeholder values.
 
@@ -34,22 +34,22 @@ Our home base will be our OpenShift cluster web console:
 {password}
 ----
 
-From here, we will navigate to and between the following environments throughout our workshop:
+Here are the key environments you will interact with and navigate across during this workshop:
 
 * **Cluster Argo CD**
-** We may use this app to view our GitOps application deployments. This may be useful if you need to check the health of any of our apps.
+** You may use this app to view our GitOps application deployments. This may be useful if you need to check the health of any of our apps.
 * **Grafana**
-** A dashboard interface that will show us model usage metrics.
+** A dashboard interface that will show your model usage metrics.
 * **Red Hat OpenShift AI**
-** Where we will view and manage our model deployments and other MLOps/LLMOps tasks and agentic resources.
+** Where you can view and manage your model deployments and other MLOps/LLMOps tasks and agentic resources.
 * **Red Hat OpenShift Dev Spaces**
-** Where we will go into our developer persona and leverage our model as a service setup for coding tasks.
+** Where you can go into your developer persona and leverage your model as a service setup for coding tasks.
 
 You may find and go to these applications via our navigation button in the web console:
 
 image::apps-menu.png[]
 
-Now that you know how to get around, your adventure begins!
+Now that you know your way around, let's dive in!
 
 == Why Agentic AI for Admins?
 
@@ -71,26 +71,26 @@ That's an example of the power of agentic AI.
 
 In this module, we'll use a preconfigured stack that includes:
 
-* **https://github.com/meta-llama/llama-stack[Llama Stack]** - a flexible open-source framework developed by Meta to simplify the creation and deployment of advanced AI applications.
-** Llama Stack provides a unified API layer for inference, RAG, agents, tools, safety, evals and telemetry.
+* **https://github.com/meta-llama/llama-stack[OGX (Llama Stack)]** - a flexible open-source framework developed by Meta to simplify the creation and deployment of advanced AI applications.
+** OGX(Llama Stack) provides a unified API layer for inference, RAG, agents, tools, safety, evals and telemetry.
 ** **Why It Matters for Enterprises**:
 *** Codifies best practices across Gen AI tools
 *** Enables reproducible, explainable, and extensible AI workflows
 *** In short, it lets you focus on value creation, not toolchain assembly.
 
-IMPORTANT: You may use frameworks like LangChain or CrewAI in conjunction with Llama Stack in OpenShift AI. These tools, together, help you build agentic AI workflows with reasoning, tool use, and orchestration. Llama Stack is Red Hat's recommended, and supported, framework for standardizing and interweaving disparate pieces of an agentic system into one observable, secure stack.
+IMPORTANT: You may use frameworks like LangChain or CrewAI in conjunction with OGX  in OpenShift AI. These tools, together, help you build agentic AI workflows with reasoning, tool use, and orchestration. OGX  is Red Hat's recommended, and supported, framework for standardizing and interweaving disparate pieces of an agentic system into one observable, secure stack.
 
-* **Kubernetes MCP Server**  - allows our LLM agent to interact with our live OpenShift cluster and deployed resources.
+* **Kubernetes MCP Server**  - allows LLM agent to interact with your live OpenShift cluster and deployed resources.
 
-* **Slack MCP Server** - allows our LLM agent to interact with a Slack workspace. We will use it to interact with a specific Slack workspace for which we have authorization configured.
+* **Slack MCP Server** - allows LLM agent to interact with a Slack workspace. It will be used to interact with a specific Slack workspace for which authorization had been configured.
 
-== Tying it Back to our MaaS Model Endpoint
+== Tying it Back to our MaaS Endpoint
 
-You can connect a Llama Stack server deployment to any model endpoint(s) you desire. For our workshop, our Llama Stack server instance is configured with our Qwen model and two MCP servers. 
+You can connect a OGX (Llama Stack) server deployment to any model endpoint(s) you desire. For the workshop, OGX server instance is configured with the Qwen model and two MCP servers. 
 
 == Test model + MCP server functionality in the playground
 
-* Go back to the Red Hat OpenShift AI dashboard. You cannot navigate there from your workspace or OpenShift Dev Spaces, so get back to the OpenShift web console first:
+* To access the Red Hat OpenShift AI dashboard, return to the main OpenShift web console and open the dashboard from there, as you cannot navigate to it directly from Dev Spaces:
 
 image::nav-rhoai-2.png[]
 
@@ -116,13 +116,13 @@ Welcome to the playground, where you can test your models, assets, and other con
 
 As a developer, you likely aren't using the playground as your primary way of connecting to your resources. However, it's a great way to test and validate that the model(s) you selected, the MCP servers you configured, and anything else you are integrating work together properly and as expected before you invest in further development.
 
-In the playground, you will see a chat interface. Our model is preselected along with a default system prompt. If you would like to change or adjust the system prompt or temperature, feel free to do so.
+In the playground, you will see a chat interface. One model is preselected along with a default system prompt. If you would like to change or adjust the system prompt or temperature, feel free to do so.
 
 NOTE: The temperature setting correlates to how creative the model is permitted to be. It is recommended to keep this setting low to ensure the model is as accurate when answering you as possible, particularly when using in conjunction with MCP servers.
 
 image::playground.png[]
 
-Before we begin chatting with the model and MCP servers, authorize the MCP servers in the playground by clicking the lock buttons:
+Before you begin chatting with the model and MCP servers, authorize the MCP servers in the playground by clicking the lock buttons:
 
 image::authorize-mcp.png[]
 
@@ -144,7 +144,7 @@ image::view-mcp-tools.png[]
 
 The tool information you just viewed will give you guidance into how to interact with the model in chat to activate the tool calls correctly. You will need to utilize the right keywords so that you're engaging with the appropriate tools.
 
-In the chat, enter:
+In the Playground chat, enter:
 
 [source,console,role=execute,subs=attributes+]
 ----
@@ -153,7 +153,7 @@ List all pods in the wksp-{user} namespace.
 
 Response output will vary slightly, but you should see it correctly list out two active pods. One for the Llama Stack playground and the other for the Dev Spaces workspace.
 
-Let's try something else:
+Let's try something else and post a message containing your name to the Slack workspace: 
 
 [source,console,role=execute,subs=attributes+]
 ----
@@ -162,9 +162,9 @@ Get logs for the lsd-genai-playground pod in the wksp-{user} namespace.
 
 Feel free to experiment further with the tools available.
 
-=== Post a Message to our Slack Workspace
+=== Post a Message to the Slack Workspace
 
-With our Slack MCP Server connected to Llama Stack, we can extend our agentic AI experience beyond Kubernetes and into team collaboration tools (among many other possibilities!).
+With the Slack MCP Server connected to Llama Stack, you can extend your agentic AI experience beyond Kubernetes and into team collaboration tools (among many other possibilities!).
 
 This MCP server bridges your AI agent with a Slack workspace to fetch approved data.
 
@@ -176,14 +176,14 @@ This MCP server bridges your AI agent with a Slack workspace to fetch approved d
 
 * This is a safe, read-only example — no messages are read or posted in this activity.
 
-==== In the LlamaStack Playground chat interface, type:
+In the LlamaStack Playground chat interface, type:
 
 [source,console,role=execute,subs=attributes+]
 ----
 List all Slack channels in our Slack workspace.
 ----
 
-Now, let's post a message to our Slack workspace:
+Now, let's post a message to the Slack workspace:
 
 [source,console,role=execute,subs=attributes+]
 ----
@@ -192,7 +192,8 @@ Post a message to the #rh-tw-tam-day-2026 channel: "Hi from <insert name>".
 
 ==== Send logs to Slack
 
-Now, let's try out a very real use case for this! It may not be done through a chat UI like this, but it's a good example of how you can use agentic AI to help you with your work. In a production environment, you would likely use a more robust automation to send logs or other information from your OpenShift cluster to Slack.
+Now, let’s explore a practical, real-world use case. In production, you would typically rely on robust automation to send logs or other cluster information from OpenShift to Slack rather than using a chat interface like this. However, this exercise demonstrates how agentic AI can help streamline everyday operational tasks.
+
 
 Let's send the logs for the lsd-genai-playground pod to the #rh-tw-tam-day-2026 channel.
 

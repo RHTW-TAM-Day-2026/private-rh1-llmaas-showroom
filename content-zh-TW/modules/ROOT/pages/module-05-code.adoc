@@ -9,7 +9,6 @@
 
 OpenShift AI 提供網頁式儀表板介面，讓您可以輕鬆地大規模部署及管理模型，並與 MCP 伺服器或評估工具等其他重要 AI 資產整合。
 
-讓我們開始連線。
 
 **開啟 OpenShift AI 儀表板**
 
@@ -31,13 +30,7 @@ image::en@modules:ROOT:nav-genaistudio.png[]
 
 image::en@modules:ROOT:genaistudio-changeproject.png[]
 
-現在您可以查看可用的資產端點。
-
-在 `Models` 標籤下，您不會看到任何可用模型。為什麼？因為這個專案（專案 = 命名空間）中沒有部署任何模型。
-
-但是，我們在叢集管理員管理的另一個命名空間中部署了模型。這位管理員已為我們的組織建立了「模型即服務」架構，集中部署並管理可供組織內各個遠端團隊使用的模型。
-
-我們沒有足夠的使用者權限來管理這些模型部署，但可以透過 `Models as a service` 標籤存取其端點資訊。
+現在您可以查看可用的資產端點。 `Models` 標籤目前為空，因為您特定的專案命名空間中沒有部署模型；不過，叢集管理員管理的另一個命名空間中已部署了一個集中式模型。儘管您的權限不允許您管理該部署本身，但您可以在「模型即服務」`（Models as a Service）`標籤下找到其端點資訊。
 
 image::en@modules:ROOT:maas-tab.png[]
 
@@ -63,7 +56,7 @@ image::en@modules:ROOT:generate-token.png[]
 
 image::en@modules:ROOT:copy-token.png[]
 
-取得模型端點和 API 金鑰後，您可以開始以 AI 開發者的身分工作。您的組織使用 OpenShift Dev Spaces，讓開發團隊能在同一個 OpenShift 叢集內建構和協作。您將使用此工作區搭配 MaaS 端點，完成一個受控的 AI 輔助程式開發練習。
+在準備好模型端點和API 金鑰後，您就可以著手進行開發工作了。您將使用 `OpenShift Dev Spaces`（基於叢集的協作環境）並結合 `MaaS` 端點，來完成一項由 AI 輔助編碼的引導式練習。
 
 == AI 程式助理的影響
 
@@ -105,7 +98,8 @@ image::en@modules:ROOT:nav-devspaces.png[]
 
 image::en@modules:ROOT:open-workspace.png[]
 
-片刻後，您將看到在瀏覽器中運行的 VSCode 介面。若出現詢問是否信任作者的提示，請點擊「Trust」。我們很友善，相信我！
+片刻後，您將看到在瀏覽器中運行的 VSCode 介面。若出現詢問是否信任作者的提示，請點擊「Trust」(保證這會是個友善的過程)
+。
 
 image::en@modules:ROOT:trust-vscode.png[]
 
@@ -198,9 +192,11 @@ NOTE: 若儲存提供者設定後，Cline 顯示 **Introducing Cline Kanban** �
 
 image::en@modules:ROOT:cline-kanban-do-not-install.png[]
 
-提供者設定文件參考：https://docs.cline.bot/provider-config/openai-compatible[Cline OpenAI-Compatible Provider Documentation]
+NOTE: 提供者設定文件參考： https://docs.cline.bot/provider-config/openai-compatible[Cline OpenAI-Compatible Provider Documentation]
 
 模型正確設定後，返回 Cline 聊天面板，確認 `qwen3-4b-instruct` 為已選取的模型。
+
+=== 測試 Cline Chat 連接
 
 發送一則簡短的測試訊息，確認模型能正常回應。
 

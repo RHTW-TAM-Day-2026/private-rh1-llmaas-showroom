@@ -31,6 +31,8 @@ export MCP_NAMESPACE="showroom-{guid}-{user}"
 export EDGE_HOST="{edge_host}"
 ----
 
+驗證
+
 [source,console,role=execute]
 ----
 printf 'MCP_NAMESPACE=%s\nEDGE_HOST=%s\n' \
@@ -39,11 +41,8 @@ printf 'MCP_NAMESPACE=%s\nEDGE_HOST=%s\n' \
 
 [WARNING]
 ====
-若 `EDGE_HOST` 顯示為 `edge.example.com`，請勿繼續。這只是本地文件建置的預設值。工作坊管理員必須先執行 `cluster-init/lab-init.sh`，使 Showroom 接收到您分配的 `edge_host` 和 `edge_password`。
-====
+若 `EDGE_HOST` 顯示為 `edge.example.com`，請勿繼續操作；請舉手並通知工作坊管理員，他必須先執行 `cluster-init/lab-init.sh`，使 Showroom 接收到您分配的 `edge_host` 和 `edge_password`。
 
-[IMPORTANT]
-====
 請勿執行 `oc new-project`，您的 ServiceAccount 無法建立專案。
 
 請勿在 Showroom 終端機中依賴 `oc project`，其 kubeconfig 可能嘗試在 `/data` 下寫入，但該路徑不可寫入。以下所有指令均透過 `MCP_NAMESPACE` Shell 變數明確指定命名空間。
@@ -51,7 +50,7 @@ printf 'MCP_NAMESPACE=%s\nEDGE_HOST=%s\n' \
 
 == 確認 Edge 應用程式日誌
 
-連線至您分配的 RHEL 10 主機，密碼為 `{edge_password}`：
+連線至您分配的 RHEL 10 edge 主機，密碼為 `{edge_password}`：
 
 [source,console,role=execute]
 ----
@@ -61,14 +60,26 @@ ssh \
   lab-user@"${EDGE_HOST}"
 ----
 
-確認作業系統與應用程式日誌：
+確認作業系統/應用程式的日誌:
+
+i.查看作業系統版本及發行版資訊
 
 [source,console,role=execute]
 ----
 cat /etc/redhat-release
+----
 
+ii. 列出日誌目錄的詳細資訊
+
+[source,console,role=execute]
+----
 ls -l /var/log/kernel-cve-radar/
+----
 
+iii.針對目前使用者有權開啟並讀取的日誌文件，測試並輸出其內容
+
+[source,console,role=execute]
+----
 for log in \
   /var/log/kernel-cve-radar/access.log \
   /var/log/kernel-cve-radar/error.log \
@@ -143,7 +154,7 @@ chmod 600 "${MCP_SSH_KEY}"
 chmod 644 "${MCP_SSH_KEY}.pub"
 ----
 
-將公鑰安裝至 Edge 主機的 `lab-user` 帳號。提示時輸入 `{edge_password}`：
+將公鑰安裝至 Edge 主機的 `lab-user` 帳號，提示時輸入 `{edge_password}`：
 
 [source,console,role=execute]
 ----
@@ -175,7 +186,12 @@ ssh \
   'whoami; hostname; tail -n 2 /var/log/kernel-cve-radar/error.log'
 ----
 
+您會看到指令的三項輸出
+
+
 == 建立 SSH 金鑰 Secret
+
+為了自動連線到 Edge 主機，RHEL MCP Pod 需要存取 SSH 私鑰。由於 Pod 無法直接讀取您終端上的文件，將金鑰保存為 OpenShift Secret 可以安全地將其傳遞給 Pod，從而使 Pod 能夠在無需密碼的情況下在後台進行登入。
 
 [source,console,role=execute]
 ----
@@ -188,7 +204,7 @@ oc create secret generic rhel-mcp-ssh-key \
 
 == 建立 MCP 政策
 
-此政策僅允許對您分配的 Edge 主機呼叫 `read_log_file`、`get_journal_logs` 和 `get_service_status`。
+MCP 策略透過明確將 RHEL MCP 伺服器的存取權限限制為僅限唯讀診斷作業（即 `read_log_file`、`get_journal_logs` 和 `get_service_status`），來執行最小權限原則。此策略將權限範圍限定在這些必要功能上，從而確保伺服器能夠從邊緣主機收集所需的遙測資料和健康狀態信息，同時透過防止未經授權的管理操作、系統修改或任意命令執行來降低安全風險。
 
 [source,console,role=execute]
 ----
@@ -213,7 +229,8 @@ EOF
 
 == 部署 RHEL MCP Server
 
-`LINUX_MCP_ALLOWED_LOG_PATHS` 是一個明確的逗號分隔檔案允許清單，不代表允許整個目錄下的遞迴存取。
+此步驟將 Linux MCP Server 及其內部叢集服務（連接埠 8000）部署到 OpenShift。此清單（manifest）使用初始化容器（init container）來設定所需的 SSH 金鑰權限（chmod 600），並利用 `rhel-mcp-policy` ConfigMap 強制執行伺服器存取控制。而`LINUX_MCP_ALLOWED_LOG_PATHS` 是一個明確的檔案白名單（各項之間以逗號分隔），它並不代表允許存取整個目錄樹。
+
 
 [source,console,role=execute]
 ----
@@ -370,7 +387,7 @@ image::en@modules:ROOT:rhel-mcp-verify.png[RHEL MCP response results for the ver
 
 == 測試 MCP 工具
 
-使用 MCP Server 的 Python 環境，透過 MCP 協定呼叫 `read_log_file`：
+透過在 Pod 內執行 Python 腳本來測試 MCP 伺服器功能，該腳本使用 fastmcp 用戶端連接到 `127.0.0.1:8000/mcp`。此操作將執行完整的協定握手，並針對所有已授權的日誌路徑呼叫 `read_log_file` 工具，從而驗證伺服器能否透過 SSH 向 Edge 主機進行驗證並取得日誌。
 
 [source,console,role=execute]
 ----
@@ -414,7 +431,7 @@ image::en@modules:ROOT:rhel-mcp-tool-log-results.png[RHEL MCP read_log_file resu
 
 == 執行否定測試
 
-`/var/log/messages` 不在允許清單中：
+透過嘗試存取 `/var/log/messages`（該路徑未包含在 `LINUX_MCP_ALLOWED_LOG_PATHS` 中）來驗證安全執行情況。執行此 Pod 內的 Python 測試可確認 MCP 伺服器確實按預期拒絕了針對未獲準日誌檔案的請求
 
 [source,console,role=execute]
 ----

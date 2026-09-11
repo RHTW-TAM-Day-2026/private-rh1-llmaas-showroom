@@ -57,33 +57,19 @@ image::use-grafana-db.png[]
 
 === Understanding the data
 
-**Total Authorized Hits**
+*Total Authorized Hits* - This represents the total token count.
 
-This represents the total token count.
+*Authorized Hits by User and Tier* - Separates token count by selected user and their tier (in this case, all users are given the Premium tier)
 
-**Authorized Hits by User and Tier**
+*Top 10 Users by Hits* - Top users based on token usage.
 
-Separates token count by selected user and their tier (in this case, all users are given the Premium tier)
+*Hourly Authorized Hits by User* - Token usage, in hourly increments, filtered by user.
 
-**Top 10 Users by Hits**
+*Total Authorized Hits by Tier (Time Range)* - Token usage filtered by tier in a given time range.
 
-Top users based on token usage.
+*Top 5 Users by Cost (Based on Tier Pricing)* - Top users based on cost, as determined by tier pricing.
 
-**Hourly Authorized Hits by User**
-
-Token usage, in hourly increments, filtered by user.
-
-**Total Authorized Hits by Tier (Time Range)**
-
-Token usage filtered by tier in a given time range.
-
-**Top 5 Users by Cost (Based on Tier Pricing)**
-
-Top users based on cost, as determined by tier pricing.
-
-**Detailed Metrics Table**
-
-Dive into the details of each user in this table. 
+*Detailed Metrics Table* - Dive into the details of each user in this table. 
 
 == Using the data
 

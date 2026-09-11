@@ -10,7 +10,6 @@ Starting in this module, you will step into the role of a developer. You will ac
 
 OpenShift AI provides a web-based dashboard interface to deploy and manage models with ease, at scale and in conjunction with other critical AI assets like MCP servers or evaluation tooling.
 
-Let's get connected.
 
 **Open the OpenShift AI Dashboard**
 
@@ -24,35 +23,29 @@ Once authenticated you will see the following home page:
 
 image::rhoai-dashboard.png[]
 
-Now, go to the `Gen AI Studio` section of the dashboard and select `AI asset endpoints`.
+Go to the `Gen AI Studio` section of the dashboard and select `AI asset endpoints`.
 
 image::nav-genaistudio.png[]
 
-In the AI asset endpoints page, change the project from `grafana` to `Workspace userx` with `x` equal to your assigned user number.
+On the AI asset endpoints page, change the project from `grafana` to `Workspace userx`,  where `x` is your assigned user number.
 
 image::genaistudio-changeproject.png[]
 
-Now you may view your available asset endpoints.
-
-You will not see any available models under the `Models` tab. Why? Because you do not have a model deployed in this project (project = namespace).
-
-We do, however, have models deployed in a separate namespace managed by our cluster admin. This admin has set up a `Models as a Service` architecture for our organization with centrally deployed models that are available for use by remote teams across the organization.
-
-We will not be able to manage the model deployments with our simple user privileges, but we can access their endpoint information via the `Models as a service` tab.
+You can now view your available asset endpoints. The `Models` tab is empty because your specific project namespace doesn't contain a deployed model. However, a centralized model is deployed in a separate namespace managed by the cluster admin. Although your permissions don't allow you to manage the deployment itself, you can find its endpoint info under the `Models as a Service` tab.
 
 image::maas-tab.png[]
 
-Select the `Models as a service` tab. You will see that your admin has deployed two models for you to use: `qwen3-4b-instruct` and `qwen3-30b-a3b-instruct-2507-fp8`.
+Select the `Models as a service` tab to view the two models deployed by your admin: `qwen3-4b-instruct` and `qwen3-30b-a3b-instruct-2507-fp8`.
 
 image::maas-model.png[]
 
 // Test model in playground
 
-For the next section, you need the endpoint for `qwen3-4b-instruct`. In the `qwen3-4b-instruct` row, select `View` under the `External endpoint` column:
+In the `qwen3-4b-instruct` row, click `View` under the `External endpoint` column to access the endpoint for the next section.
 
 image::view-endpoint.png[]
 
-Copy the MaaS route into a separate note file on your computer for safekeeping.
+Copy the MaaS route into a separate text file on your computer for later use.
 
 image::copy-route.png[]
 
@@ -64,7 +57,7 @@ Copy this value along with your route endpoint.
 
 image::copy-token.png[]
 
-Now that you have your model endpoint and API key, you can proceed to your work as an AI developer. Your organization leverages OpenShift Dev Spaces so development teams can build and collaborate inside the same OpenShift cluster. You will use this workspace with the MaaS endpoint to complete a controlled AI-assisted coding exercise.
+With your model endpoint and API key secured, you're ready to begin your development work. You will use OpenShift Dev Spaces—our cluster-based collaborative environment—along with your MaaS endpoint to complete a guided AI-assisted coding exercise.
 
 == The impact of AI code assistants
 
@@ -74,7 +67,7 @@ Modern code assistants can:
 
 * **Understand Full Project Context**: Assistants like Cline, GitHub Copilot, and Cursor can read across files and directories, understanding how your code fits together.
 
-* **Edit code with Natural Language**: You can describe a change—like "add error handling here" or "convert this to async"—and AI-powered assistants can apply that change intelligently.
+* **Edit Code with Natural Language:** Describe the change you want—such as “add error handling here” or “convert this to async”—and AI-powered assistants can intelligently apply it to your code.
 
 * **Proactively Suggest Improvements**: They catch bugs, highlight inefficiencies, and recommend best-practice patterns.
 
@@ -88,7 +81,7 @@ Let's get set up.
 
 As a developer, your environment should be fast, consistent, and ready to go for your work. That is what OpenShift Dev Spaces delivers: instant access to pre-configured, containerized workspaces — all running securely on your OpenShift cluster.
 
-You could also leverage an exposed model API endpoint in your local environment as a developer, if the model is exposed properly. However, your company has not exposed the model outside of the confines of the cluster, so you are required to work within the environment and not locally.
+You could also work locally if the model API were exposed externally, but since your company limits access to the internal cluster, you'll need to develop directly within that environment.
 
 NOTE: Even though the model route information you copied from the OpenShift AI dashboard interface showed as an **External endpoint** route, there is no external route exposed in this cluster. However, the current MaaS implementation expects external route exposure so this naming is hardcoded into the dashboard. 
 
@@ -98,15 +91,15 @@ NOTE: Even though the model route information you copied from the OpenShift AI d
 
 image::nav-devspaces.png[]
 
-When prompted for your login credentials, repeat the same user login from previous steps.
+When prompted, log in using your credentials from the previous steps.
 
-Once authenticated, you will see the OpenShift Dev Spaces central dashboard. We have prepared a workspace for you to access. This is a VSCode IDE workspace with a prepared repository already cloned in and necessary dependencies.
+Once authenticated, you’ll reach the OpenShift Dev Spaces central dashboard. Your pre-configured VS Code workspace—complete with the repository and required dependencies will be ready for you.
 
-When fully loaded, as indicated by a green dot by the workspace name (this could take a moment), click `Open`.
+Wait until the green status dot appears next to the workspace name, then click Open.
 
 image::open-workspace.png[]
 
-After a moment, you'll see the VSCode interface running in your browser. If prompted, click "Trust" when asked about the authors. We're friendly, I promise! 
+The VS Code interface will load in your browser shortly. If a popup asks whether you trust the authors, click "Yes, I Trust the authors" to proceed.
 
 image::trust-vscode.png[]
 
@@ -199,11 +192,13 @@ NOTE: If Cline shows an **Introducing Cline Kanban** prompt after saving the pro
 
 image::cline-kanban-do-not-install.png[]
 
-Reference the provider configuration documentation here: https://docs.cline.bot/provider-config/openai-compatible[Cline OpenAI-Compatible Provider Documentation]
+NOTE: Reference the provider configuration documentation here: https://docs.cline.bot/provider-config/openai-compatible[Cline OpenAI-Compatible Provider Documentation]
 
 When the model is properly configured, return to the Cline chat panel and confirm that `qwen3-4b-instruct` is the selected model.
 
-Go ahead and send a short test message to confirm that the model responds.
+=== Test Connection at Cline Chat
+
+Send a quick test message to verify that the model is actively responding.
 
 image::cline-test-response.png[]
 

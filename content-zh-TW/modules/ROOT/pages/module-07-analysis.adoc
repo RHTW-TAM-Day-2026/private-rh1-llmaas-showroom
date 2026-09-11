@@ -162,7 +162,7 @@ rhel-mcp__read_log_file
 
 === MCP 連線正常但 SSH 中斷
 
-從 Showroom 終端機重新啟動您的個人 MCP 部署：
+當MCP 連線正常但 SSH 連線關閉時，從 Showroom 終端機重新啟動您的個人 MCP 部署：
 
 [source,console,role=execute,subs=attributes+]
 ----

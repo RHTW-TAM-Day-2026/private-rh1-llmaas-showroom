@@ -31,6 +31,8 @@ export MCP_NAMESPACE="showroom-{guid}-{user}"
 export EDGE_HOST="{edge_host}"
 ----
 
+Validate:
+
 [source,console,role=execute]
 ----
 printf 'MCP_NAMESPACE=%s\nEDGE_HOST=%s\n' \
@@ -39,19 +41,16 @@ printf 'MCP_NAMESPACE=%s\nEDGE_HOST=%s\n' \
 
 [WARNING]
 ====
-Do not continue if `EDGE_HOST` displays `edge.example.com`. This is only the fallback value for local documentation builds. The workshop administrator must first run `cluster-init/lab-init.sh` so that Showroom receives your assigned `edge_host` and `edge_password`.
-====
+If `EDGE_HOST` shows `edge.example.com`, stop and inform the workshop administrator — he/she must run `cluster-init/lab-init.sh` first to generate your assigned host and password.
 
-[IMPORTANT]
-====
 Do not run `oc new-project`. Your ServiceAccount cannot create projects.
 
 Do not rely on `oc project` in the Showroom terminal. Its kubeconfig may attempt to write under `/data`, which is not writable. All commands below explicitly specify the namespace through the `MCP_NAMESPACE` shell variable.
 ====
 
-== Verify the Edge Application Logs
+== Access the Application Logs on Edge Host
 
-Connect to your assigned RHEL 10 host. The password is `{edge_password}`:
+Connect to your assigned RHEL 10 edge host with password `{edge_password}`:
 
 [source,console,role=execute]
 ----
@@ -61,14 +60,25 @@ ssh \
   lab-user@"${EDGE_HOST}"
 ----
 
-Verify the operating system and application logs:
+Access the operating system/application logs
+
+Identify the OS version and distribution:
 
 [source,console,role=execute]
 ----
 cat /etc/redhat-release
+----
 
+Performs a detailed directory listing of the log folder:
+
+[source,console,role=execute]
+----
 ls -l /var/log/kernel-cve-radar/
+----
 
+Tests and prints READABLE /path/to/file only for the logs the current user can successfully open and read:
+
+[source,console,role=execute]
 for log in \
   /var/log/kernel-cve-radar/access.log \
   /var/log/kernel-cve-radar/error.log \
@@ -78,7 +88,7 @@ do
 done
 ----
 
-The expected files are `access.log`, `error.log`, and `auth-events.jsonl`.
+Expected output are READABLE for `access.log`, `error.log`, and `auth-events.jsonl`.
 
 == Prepare the SSH Authorization Directory on the Edge Host
 
@@ -115,16 +125,21 @@ lab-user 600 /home/lab-user/.ssh/authorized_keys
 
 == Generate the MCP SSH Key in the Showroom Terminal
 
-The Linux MCP Server requires an SSH key to connect to the Edge host. The private key will be created in the Showroom terminal, stored later in an OpenShift Secret, and mounted into the RHEL MCP Pod. The Edge host needs only the corresponding public key.
+To secure the Linux MCP Server with SSH key authentication, the keys are distributed as follows:
 
-If you are still connected to the Edge host, return to the Showroom terminal:
+* Private Key: Generated in the Showroom terminal, saved in an OpenShift Secret, and mounted directly into the RHEL MCP Pod.
+
+* Public Key: Installed solely on the Edge host.
+
+If you are currently logged into the Edge host, please switch back to the Showroom terminal:
+
 
 [source,console,role=execute]
 ----
 exit
 ----
 
-Create a dedicated SSH key in the Showroom terminal. This lab uses a key without a passphrase so that RHEL MCP can connect non-interactively:
+Generate a dedicated SSH key without a passphrase in the Showroom terminal to enable non-interactive connections for RHEL MCP:
 
 [source,console,role=execute]
 ----
@@ -143,7 +158,7 @@ chmod 600 "${MCP_SSH_KEY}"
 chmod 644 "${MCP_SSH_KEY}.pub"
 ----
 
-Install the public key in the `lab-user` account on the Edge host. Enter `{edge_password}` when prompted:
+Install the public key into the `lab-user` account on the Edge host using `{edge_password}` when prompted:
 
 [source,console,role=execute]
 ----
@@ -175,7 +190,19 @@ ssh \
   'whoami; hostname; tail -n 2 /var/log/kernel-cve-radar/error.log'
 ----
 
+You shall see the output of:
+
+[source,text]
+----
+whoami
+hostname
+tail -n 2 /var/log/kernel-cve-radar/error.log 
+----
+
 == Create the SSH Key Secret
+
+To connect to the Edge host automatically, the `RHEL MCP Pod` needs access to the `SSH private key`. Because the Pod cannot read files directly from your terminal, saving the key as an `OpenShift Secret` safely hands it over to the Pod so it can log in behind the scenes without requiring a password.
+
 
 [source,console,role=execute]
 ----
@@ -188,7 +215,7 @@ oc create secret generic rhel-mcp-ssh-key \
 
 == Create the MCP Policy
 
-This policy allows only `read_log_file`, `get_journal_logs`, and `get_service_status` calls to your assigned Edge host.
+The MCP Policy enforces the principle of least privilege by explicitly restricting the RHEL MCP server's access to read-only diagnostic operations: `read_log_file`, `get_journal_logs`, and `get_service_status`. By scoping permissions to only these essential functions, the policy ensures the server can collect required telemetry and health status from the Edge host while mitigating security risks by preventing unauthorized administrative actions, system modifications, or arbitrary command execution.
 
 [source,console,role=execute]
 ----
@@ -213,7 +240,8 @@ EOF
 
 == Deploy the RHEL MCP Server
 
-`LINUX_MCP_ALLOWED_LOG_PATHS` is an explicit, comma-separated file allowlist. It does not allow recursive access to the entire directory.
+This step deploys the Linux MCP Server and its internal cluster Service (port 8000) to OpenShift. The manifest uses an init container to set required SSH key permissions (chmod 600) and enforces server access controls using the `rhel-mcp-policy ConfigMap`. Note that `LINUX_MCP_ALLOWED_LOG_PATHS` is an explicit, comma-separated file allowlist — it does not represent a recursively allowed directory.
+
 
 [source,console,role=execute]
 ----
@@ -370,7 +398,8 @@ image::en@modules:ROOT:rhel-mcp-verify.png[RHEL MCP response results for the ver
 
 == Test the MCP Tools
 
-Use the MCP Server's Python environment to call `read_log_file` through the MCP protocol:
+Test the MCP server functionality by running an in-pod Python script that uses the fastmcp client to connect to 127.0.0.1:8000/mcp. This performs a complete protocol handshake and calls the `read_log_file` tool against all authorized log paths, verifying that the server can authenticate to the Edge host via SSH and retrieve the logs:
+
 
 [source,console,role=execute]
 ----
@@ -412,9 +441,10 @@ All three calls must successfully return log content.
 
 image::en@modules:ROOT:rhel-mcp-tool-log-results.png[RHEL MCP read_log_file results for the allowed application logs,width=90%]
 
-== Run a Negative Test
+== Perform a Negative Test
 
-`/var/log/messages` is not in the allowlist:
+Validate security enforcement by attempting to access `/var/log/messages`, which is not included in `LINUX_MCP_ALLOWED_LOG_PATHS`. Running this in-pod Python test verifies that the MCP server properly rejects requests for unapproved log files as expected:
+
 
 [source,console,role=execute]
 ----
