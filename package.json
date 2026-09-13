@@ -10,8 +10,8 @@
     "serve": "npm run build && npm run preview"
   },
   "devDependencies": {
-    "@antora/cli": "3.1.15",
-    "@antora/site-generator": "3.1.15",
+    "@antora/cli": "^3.1.15",
+    "@antora/site-generator": "^3.1.15",
     "http-server": "14.1.1"
   }
 }

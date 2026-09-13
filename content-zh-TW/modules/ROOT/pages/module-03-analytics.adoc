@@ -56,33 +56,19 @@ image::en@modules:ROOT:use-grafana-db.png[]
 
 === 了解資料內容
 
-**Total Authorized Hits（授權命中總數）**
+*Total Authorized Hits（授權命中總數）* - 代表 Token 使用的總計數。
 
-代表 Token 使用的總計數。
+*Authorized Hits by User and Tier（依使用者與方案的授權命中數）* - 依所選使用者及其方案（本工作坊中所有使用者均為 Premium 方案）分別列出 Token 計數。
 
-**Authorized Hits by User and Tier（依使用者與方案的授權命中數）**
+*Top 10 Users by Hits（使用量前 10 名使用者）* - 依 Token 使用量排名的前 10 位使用者。
 
-依所選使用者及其方案（本工作坊中所有使用者均為 Premium 方案）分別列出 Token 計數。
+*Hourly Authorized Hits by User（依使用者的每小時授權命中數）* - 依使用者篩選、以每小時為單位的 Token 使用量。
 
-**Top 10 Users by Hits（使用量前 10 名使用者）**
+*Total Authorized Hits by Tier (Time Range)（依方案的授權命中總數，按時間範圍）* - 在指定時間範圍內依方案篩選的 Token 使用量。
 
-依 Token 使用量排名的前 10 位使用者。
+*Top 5 Users by Cost (Based on Tier Pricing)（依成本排名前 5 名使用者，以方案定價為基準）* - 依方案定價計算成本，列出花費最高的前 5 位使用者。
 
-**Hourly Authorized Hits by User（依使用者的每小時授權命中數）**
-
-依使用者篩選、以每小時為單位的 Token 使用量。
-
-**Total Authorized Hits by Tier (Time Range)（依方案的授權命中總數，按時間範圍）**
-
-在指定時間範圍內依方案篩選的 Token 使用量。
-
-**Top 5 Users by Cost (Based on Tier Pricing)（依成本排名前 5 名使用者，以方案定價為基準）**
-
-依方案定價計算成本，列出花費最高的前 5 位使用者。
-
-**Detailed Metrics Table（詳細指標表格）**
-
-深入查看此表格中每位使用者的詳細資訊。
+*Detailed Metrics Table（詳細指標表格）* - 深入查看此表格中每位使用者的詳細資訊。
 
 == 活用資料
 
